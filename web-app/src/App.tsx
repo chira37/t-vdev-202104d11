@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Item from "./componets/Item";
+import Search from "./componets/Search";
+import Alert from "./componets/Alert";
+
+import { useStore } from "./store";
 
 function App() {
-    const [count, setCount] = useState(0);
+    const fetchItem = useStore((state) => state.fetchItem);
+    const items = useStore((state) => state.items);
+    const filterItems = useStore((state) => state.filterItems);
+    const loading = useStore((state) => state.loading);
+    const error = useStore((state) => state.error);
+
+    useEffect(() => {
+        fetchItem();
+    }, []);
 
     return (
         <div className="flex justify-center">
-            <div className="mt-5	max-w-screen-md">
-                <div className="p-6 bg-green-400 rounded		flex flex-row shadow justify-between">
-                    <h1 className="font-sans font-bold text-4xl	text-white">MOVIES</h1>
-                    <div className="flex flex-row	">
-                        <input className="pl-2 border-transparent rounded-l-md	border focus:outline-none"></input>
-                        <button className="bg-gray-200 rounded-r-md hover:bg-gray-300 focus:outline-none pl-2 pr-2 text-md font-medium text-gray-900	border-none	">
-                            Search
-                        </button>
-                    </div>
-                </div>
+            <div className="mt-5 	md:w-2/5">
+                <Search />
+                {loading && <Alert message={"Loading.."}/>}
+                {error && <Alert message={error}/>}   
                 <div>
-                    <Item data={{ name: "dasdads", year: 2020, description: "sadasds" }} />
-                    <Item data={{ name: "dasdads", year: 2020, description: "sadasds" }} />
-                    <Item data={{ name: "dasdads", year: 2020, description: "sadasds" }} />
-                    <Item data={{ name: "dasdads", year: 2020, description: "sadasds" }} />
+                    {filterItems.map((item, key) => {
+                        return <Item key={key} data={item} />;
+                    })}
                 </div>
 
                 <div className="pt-8 pr-0 flex justify-end">
-                    <p className=" text-lg mr-12 font-medium font-semibold text-gray-900">No hidden fees 12</p>
+                    <p className=" text-lg mr-12 font-medium font-semibold text-gray-900">
+                        Number of Movies {items.length}
+                    </p>
                 </div>
             </div>
         </div>
