@@ -1,35 +1,29 @@
-import { join } from 'path';
-import AutoLoad, {AutoloadPluginOptions} from 'fastify-autoload';
-import { FastifyPluginAsync } from 'fastify';
+import * as fastify from "fastify";
+import { config } from "./config";
+import routes from "./routes";
+import * as mongoose from "mongoose";
 
-export type AppOptions = {
-  // Place your custom options for app below here.
-} & Partial<AutoloadPluginOptions>;
+const app = fastify.default({ logger: true });
 
-const app: FastifyPluginAsync<AppOptions> = async (
-    fastify,
-    opts
-): Promise<void> => {
-  // Place here your custom code!
+routes.forEach((route) => {
+    app.route(route);
+});
 
-  // Do not touch the following lines
-
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
-  void fastify.register(AutoLoad, {
-    dir: join(__dirname, 'plugins'),
-    options: opts
-  })
-
-  // This loads all plugins defined in routes
-  // define your routes in one of these
-  void fastify.register(AutoLoad, {
-    dir: join(__dirname, 'routes'),
-    options: opts
-  })
-
+const start = async (): Promise<void> => {
+    try {
+        await app.listen(config.app.port);
+    } catch (error) {
+        app.log.error(error);
+        process.exit(1);
+    }
 };
+start();
 
 export default app;
-export { app }
+
+mongoose
+    .connect(config.db.connection, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => app.log.info("conneted to monogoDB"))
+    .catch((error) => app.log.error(error));
+
+

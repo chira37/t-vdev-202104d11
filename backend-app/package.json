@@ -10,21 +10,28 @@
     "test": "npm run build:ts && tsc -p test/tsconfig.test.json && tap test/**/*.test.ts",
     "start": "npm run build:ts && fastify start -l info dist/app.js",
     "build:ts": "tsc",
-    "dev": "tsc && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\"  \"tsc -w\" \"fastify start -w -l info -P dist/app.js\""
+    "dev": "tsc && node dist/app.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/boom": "^7.3.0",
+    "@types/mongoose": "^5.10.4",
+    "boom": "^7.3.0",
+    "dotenv": "^8.2.0",
     "fastify": "^3.0.0",
-    "fastify-plugin": "^3.0.0",
     "fastify-autoload": "^3.3.1",
+    "fastify-cli": "^2.9.1",
+    "fastify-plugin": "^3.0.0",
     "fastify-sensible": "^3.1.0",
-    "fastify-cli": "^2.9.1"
+    "mongoose": "^5.12.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.14",
     "@types/tap": "^14.10.1",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
     "concurrently": "^6.0.0",
     "fastify-tsconfig": "^1.0.1",
     "tap": "^14.11.0",
