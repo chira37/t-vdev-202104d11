@@ -1,7 +1,7 @@
 
 export const config = {
 	app: {
-		port: process.env.SERVER_PORT || 1225,
+		backendPort: process.env.BACKEND_PORT || 1225,
 	},
 	db: {
 		connection : process.env.DB_CONNECTION || "",
