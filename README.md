@@ -1,3 +1,25 @@
+
+# setup
+
+```
+
+build th front end
+
+cd web-app
+yarn
+yarn build
+
+
+start the server
+
+cd backend-app
+yarn
+yarn dev
+
+```
+
+Open http://localhost:1225
+
 # vdev-202104d11
 
 1. git init
