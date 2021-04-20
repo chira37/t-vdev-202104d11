@@ -3,7 +3,7 @@
 
 ```
 
-build th front end
+build the front end
 
 cd web-app
 yarn
