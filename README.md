@@ -12,7 +12,7 @@ yarn build
 
 start the server
 
-cd backend-app
+cd ../backend-app
 yarn
 yarn dev
 
