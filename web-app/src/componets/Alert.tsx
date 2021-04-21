@@ -7,7 +7,7 @@ type ItemProps = {
 const Alert: React.FC<ItemProps> = ({ message }) => {
     return (
         <div className="p-20 flex justify-center">
-            <h1 className="text-lg  font-medium font-semibold text-gray-900">{message}</h1>
+            <h1 className="text-lg font-semibold text-gray-900">{message}</h1>
         </div>
     );
 };
